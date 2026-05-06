@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  background-color: #0d0d0d; // falls du global dark willst
+  color: white;
+}
+
+.home {
+  min-height: 100vh;
+  background-color: rgb(47, 49, 49);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.home-content {
+  max-width: 500px;
+  z-index: 2;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin: 0 0 0.5rem 0;
+}
+
+.title {
+  font-size: 3.2rem;
+  margin: 0 0 2rem 0;
+  font-weight: 700;
+}
+
+.play-btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #f0ea6e;
+  color: #000;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.play-btn:hover {
+  transform: scale(1.05);
+}
+
+.btn-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.arrow {
+  font-size: 1.4rem;
+  margin-left: auto;
+}
+
+.controller-side {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  width: 260px;
+  z-index: 1;
+  width: clamp(180px, 25vw, 260px);
+  max-width: 100%;
+}
+
+.controller-side path {
+  fill: rgb(57, 59, 52);
+}
