@@ -11,12 +11,11 @@ function getGameTemplate(): string {
     <section class="game game--${GAME_STATE.theme}">
 
       <div class="game__hud">
-  <div id="score-blue" class="game__score player--blue">Blue: 0</div>
-  <div id="score-orange" class="game__score player--orange">Orange: 0</div>
-  <div id="current-player" class="current-player player--blue">Current: Blue</div>
-  <button class="game__exit">Exit Game</button>
-</div>
-
+        <div id="score-blue" class="game__score player--blue">Blue: 0</div>
+        <div id="score-orange" class="game__score player--orange">Orange: 0</div>
+        <div id="current-player" class="current-player player--blue">Current: Blue</div>
+        <button class="game__exit">Exit Game</button>
+      </div>
 
       <div class="game__board" id="game-board"></div>
 
@@ -46,8 +45,24 @@ function initGameBoard(): void {
   if (size === 24) board.style.gridTemplateColumns = "repeat(6, 1fr)";
   if (size === 36) board.style.gridTemplateColumns = "repeat(6, 1fr)";
 
-  // KARTEN GENERIEREN
-  for (let i = 0; i < size; i++) {
+  // -----------------------------------------
+  // PAARE ERZEUGEN
+  // -----------------------------------------
+  const pairCount = size / 2;
+  let cardsArray: number[] = [];
+
+  for (let i = 1; i <= pairCount; i++) {
+    cardsArray.push(i);
+    cardsArray.push(i);
+  }
+
+  // SHUFFLE
+  cardsArray = shuffle(cardsArray);
+
+  // -----------------------------------------
+  // KARTEN RENDERN
+  // -----------------------------------------
+  cardsArray.forEach((num) => {
     const card = document.createElement("div");
     card.classList.add("card");
 
@@ -57,19 +72,98 @@ function initGameBoard(): void {
           <img src="/cards/${theme}/back.png" alt="">
         </div>
         <div class="card__back">
-          <img src="/cards/${theme}/${i + 1}.png" alt="">
+          <img src="/cards/${theme}/${num}.png" alt="">
         </div>
       </div>
     `;
 
-    card.addEventListener("click", () => {
-      card.classList.toggle("is-flipped");
-    });
+    card.addEventListener("click", () => handleCardClick(card));
 
     board.appendChild(card);
-  }
+  });
 
   // HUD initialisieren
+  updatePlayerHUD();
+}
+
+/* ---------------------------------------------------
+   SHUFFLE
+--------------------------------------------------- */
+
+function shuffle(array: any[]) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+/* ---------------------------------------------------
+   MATCHING SYSTEM
+--------------------------------------------------- */
+
+let firstCard: HTMLElement | null = null;
+let secondCard: HTMLElement | null = null;
+let lockBoard = false;
+
+function handleCardClick(card: HTMLElement) {
+  if (lockBoard) return;
+  if (card === firstCard) return;
+
+  card.classList.add("is-flipped");
+
+  if (!firstCard) {
+    firstCard = card;
+    return;
+  }
+
+  secondCard = card;
+  lockBoard = true;
+
+  checkForMatch();
+}
+
+function checkForMatch() {
+  const img1 = firstCard!.querySelector(".card__back img") as HTMLImageElement;
+  const img2 = secondCard!.querySelector(".card__back img") as HTMLImageElement;
+
+  const match = img1.src === img2.src;
+
+  if (match) {
+    disableMatchedCards();
+    updateScore();
+    resetTurn();
+  } else {
+    unflipCards();
+    switchPlayer();
+  }
+}
+
+function disableMatchedCards() {
+  firstCard!.style.pointerEvents = "none";
+  secondCard!.style.pointerEvents = "none";
+}
+
+function unflipCards() {
+  setTimeout(() => {
+    firstCard!.classList.remove("is-flipped");
+    secondCard!.classList.remove("is-flipped");
+    resetTurn();
+  }, 1000);
+}
+
+function resetTurn() {
+  [firstCard, secondCard] = [null, null];
+  lockBoard = false;
+}
+
+function updateScore() {
+  if (GAME_STATE.currentPlayer === "blue") {
+    GAME_STATE.scoreBlue++;
+  } else {
+    GAME_STATE.scoreOrange++;
+  }
+
   updatePlayerHUD();
 }
 
@@ -99,9 +193,9 @@ function updatePlayerHUD() {
   }
 }
 
-// function switchPlayer() {
-//   GAME_STATE.currentPlayer =
-//     GAME_STATE.currentPlayer === "blue" ? "orange" : "blue";
+function switchPlayer() {
+  GAME_STATE.currentPlayer =
+    GAME_STATE.currentPlayer === "blue" ? "orange" : "blue";
 
-//   updatePlayerHUD();
-// }
+  updatePlayerHUD();
+}
