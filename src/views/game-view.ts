@@ -34,25 +34,38 @@ function initGameBoard(): void {
   const size = GAME_STATE.size;
   const theme = GAME_STATE.theme;
 
-  // Grid dynamisch setzen
+  // EXIT GAME BUTTON
+  const exitBtn = document.querySelector(".game__exit")!;
+  exitBtn.addEventListener("click", () => {
+    GAME_STATE.currentPlayer = "blue";
+    GAME_STATE.scoreBlue = 0;
+    GAME_STATE.scoreOrange = 0;
+
+    import("./setting-view").then((module) => {
+      module.renderSettings();
+    });
+  });
+
+  // GRID SETUP
   if (size === 16) board.style.gridTemplateColumns = "repeat(4, 1fr)";
   if (size === 24) board.style.gridTemplateColumns = "repeat(6, 1fr)";
   if (size === 36) board.style.gridTemplateColumns = "repeat(6, 1fr)";
 
+  // KARTEN GENERIEREN
   for (let i = 0; i < size; i++) {
     const card = document.createElement("div");
     card.classList.add("card");
 
     card.innerHTML = `
-    <div class="card__inner">
-      <div class="card__front">
-        <img src="/cards/${theme}/back.png" alt="">
+      <div class="card__inner">
+        <div class="card__front">
+          <img src="/cards/${theme}/back.png" alt="">
+        </div>
+        <div class="card__back">
+          <img src="/cards/${theme}/${i + 1}.png" alt="">
+        </div>
       </div>
-      <div class="card__back">
-        <img src="/cards/${theme}/${i + 1}.png" alt="">
-      </div>
-    </div>
-  `;
+    `;
 
     card.addEventListener("click", () => {
       card.classList.toggle("is-flipped");
@@ -61,3 +74,4 @@ function initGameBoard(): void {
     board.appendChild(card);
   }
 }
+
