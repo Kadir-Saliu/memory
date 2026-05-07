@@ -11,17 +11,12 @@ function getGameTemplate(): string {
     <section class="game game--${GAME_STATE.theme}">
 
       <div class="game__hud">
-        <div class="game__score">
-          <span class="player player--blue">Blue: 0</span>
-          <span class="player player--orange">Orange: 4</span>
-        </div>
+  <div id="score-blue" class="game__score player--blue">Blue: 0</div>
+  <div id="score-orange" class="game__score player--orange">Orange: 0</div>
+  <div id="current-player" class="current-player player--blue">Current: Blue</div>
+  <button class="game__exit">Exit Game</button>
+</div>
 
-        <div class="game__current">
-          Current Player: <strong class="current-player">Blue</strong>
-        </div>
-
-        <button class="game__exit">Exit Game</button>
-      </div>
 
       <div class="game__board" id="game-board"></div>
 
@@ -73,5 +68,40 @@ function initGameBoard(): void {
 
     board.appendChild(card);
   }
+
+  // HUD initialisieren
+  updatePlayerHUD();
 }
 
+/* ---------------------------------------------------
+   PLAYER SYSTEM
+--------------------------------------------------- */
+
+function updatePlayerHUD() {
+  const currentPlayerEl = document.getElementById("current-player")!;
+  const blueScoreEl = document.getElementById("score-blue")!;
+  const orangeScoreEl = document.getElementById("score-orange")!;
+
+  // Scores aktualisieren
+  blueScoreEl.textContent = `Blue: ${GAME_STATE.scoreBlue}`;
+  orangeScoreEl.textContent = `Orange: ${GAME_STATE.scoreOrange}`;
+
+  // Current Player anzeigen
+  currentPlayerEl.textContent = `Current: ${GAME_STATE.currentPlayer}`;
+
+  // Styling je nach Player
+  if (GAME_STATE.currentPlayer === "blue") {
+    currentPlayerEl.classList.remove("player--orange");
+    currentPlayerEl.classList.add("player--blue");
+  } else {
+    currentPlayerEl.classList.remove("player--blue");
+    currentPlayerEl.classList.add("player--orange");
+  }
+}
+
+// function switchPlayer() {
+//   GAME_STATE.currentPlayer =
+//     GAME_STATE.currentPlayer === "blue" ? "orange" : "blue";
+
+//   updatePlayerHUD();
+// }
