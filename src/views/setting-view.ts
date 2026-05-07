@@ -1,5 +1,6 @@
 import { APP } from "../app";
 
+
 export function renderSettings(): void {
   APP.innerHTML = getSettingsTemplate();
   initSettingsEvents();
@@ -123,19 +124,23 @@ function initSettingsEvents(): void {
       const option = target.closest(".settings__option");
       if (!option) return;
 
-      // Reset
       group.querySelectorAll(".settings__option").forEach((opt) => {
         opt.classList.remove("is-active");
       });
 
-      // Activate
       option.classList.add("is-active");
 
-      // Update summary + preview
       updateSummary(option as HTMLElement);
     });
   });
+
+  // ⭐ Start-Button Navigation
+  document.getElementById("start-game")?.addEventListener("click", () => {
+    saveSettingsToState();
+    renderGameBoard();
+  });
 }
+
 
 function updateSummary(option: HTMLElement) {
   const summaryLine = document.getElementById("summary-line")!;
@@ -168,3 +173,13 @@ function updateSummary(option: HTMLElement) {
   ${size}
 `;
 }
+
+import { GAME_STATE } from "../state/state";
+import { renderGameBoard } from "../views/game-view";
+
+function saveSettingsToState() {
+  GAME_STATE.theme = document.querySelector(".settings__option[data-theme].is-active")?.getAttribute("data-theme") || "code";
+  GAME_STATE.player = document.querySelector(".settings__option[data-player].is-active")?.getAttribute("data-player") || "blue";
+  GAME_STATE.size = Number(document.querySelector(".settings__option[data-size].is-active")?.getAttribute("data-size") || 16);
+}
+
