@@ -1,5 +1,6 @@
 .card {
-  width: 100%;
+  min-width: 100px;
+  min-height: 120px;
   aspect-ratio: 1 / 1;
   perspective: 800px;
   cursor: pointer;
@@ -30,7 +31,6 @@
   font-size: 2rem;
   font-weight: 700;
 }
-
 
 /* Rückseite */
 .card__back {

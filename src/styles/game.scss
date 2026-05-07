@@ -5,8 +5,8 @@
 
 .card__front img,
 .card__back img {
-  width: 70%;
-  height: 70%;
+  height: 100%;
+  width: 100%;
   object-fit: contain;
 }
 
@@ -25,6 +25,13 @@
 /* ============================
    RESULT SCREEN (BASIS)
 ============================ */
+
+.game__board {
+  max-width: 900px; // oder 1000px, je nach Geschmack
+  margin: 0 auto;
+  gap: 8px;
+}
+
 
 .game-over {
   text-align: center;

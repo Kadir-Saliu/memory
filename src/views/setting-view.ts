@@ -1,6 +1,5 @@
 import { APP } from "../app";
 
-
 export function renderSettings(): void {
   APP.innerHTML = getSettingsTemplate();
   initSettingsEvents();
@@ -141,7 +140,6 @@ function initSettingsEvents(): void {
   });
 }
 
-
 function updateSummary(option: HTMLElement) {
   const summaryLine = document.getElementById("summary-line")!;
   const previewImg = document.getElementById("preview-img") as HTMLImageElement;
@@ -178,8 +176,18 @@ import { GAME_STATE } from "../state/state";
 import { renderGameBoard } from "../views/game-view";
 
 function saveSettingsToState() {
-  GAME_STATE.theme = document.querySelector(".settings__option[data-theme].is-active")?.getAttribute("data-theme") || "code";
-  GAME_STATE.player = document.querySelector(".settings__option[data-player].is-active")?.getAttribute("data-player") || "blue";
-  GAME_STATE.size = Number(document.querySelector(".settings__option[data-size].is-active")?.getAttribute("data-size") || 16);
-}
+  GAME_STATE.theme =
+    document
+      .querySelector(".settings__option[data-theme].is-active")
+      ?.getAttribute("data-theme") || "code";
 
+  GAME_STATE.selectedPlayer = document
+    .querySelector(".settings__option[data-player].is-active")
+    ?.getAttribute("data-player") as "blue" | "orange";
+
+  GAME_STATE.size = Number(
+    document
+      .querySelector(".settings__option[data-size].is-active")
+      ?.getAttribute("data-size") || 16,
+  );
+}

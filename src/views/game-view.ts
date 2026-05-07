@@ -24,6 +24,12 @@ function getGameTemplate(): string {
 }
 
 function initGameBoard(): void {
+  document.addEventListener("keydown", (e) => {
+  if (e.key === "1") showResultScreenOverride("blue");
+  if (e.key === "2") showResultScreenOverride("orange");
+  if (e.key === "3") showResultScreenOverride("draw");
+  if (e.key === "4") showResultScreenOverride("gameover");
+});
   const board = document.getElementById("game-board")!;
   const size = GAME_STATE.size;
   const theme = GAME_STATE.theme;
@@ -85,6 +91,53 @@ function initGameBoard(): void {
   // HUD initialisieren
   updatePlayerHUD();
 }
+
+function showResultScreenOverride(screen: "blue" | "orange" | "draw" | "gameover") {
+  // exakt dieselbe Struktur wie showResultScreen()
+  // nur ohne die Gewinnerlogik
+  APP.innerHTML = `
+    <section class="winner-screen">
+
+      ${
+        screen === "blue" || screen === "orange"
+          ? `<img class="confetti" src="/images/confetti.png" alt="confetti">`
+          : ""
+      }
+
+      <h2 class="winner-title ${screen}">
+        ${
+          screen === "blue"
+            ? "The winner is BLUE PLAYER"
+            : screen === "orange"
+            ? "The winner is ORANGE PLAYER"
+            : screen === "draw"
+            ? "It's a<br>DRAW"
+            : "Game Over"
+        }
+      </h2>
+
+      ${
+        screen === "blue"
+          ? `<img class="winner-icon" src="/images/player-blue.png">`
+          : screen === "orange"
+          ? `<img class="winner-icon" src="/images/player-orange.png">`
+          : screen === "draw"
+          ? `<img class="winner-icon" src="/images/draw-icon.png">`
+          : ""
+      }
+
+      <div class="winner-buttons">
+        <button id="back">Back to start</button>
+      </div>
+
+    </section>
+  `;
+
+  document.getElementById("back")!.addEventListener("click", () => {
+    import("./setting-view").then((module) => module.renderSettings());
+  });
+}
+
 
 /* ---------------------------------------------------
    SHUFFLE
@@ -169,7 +222,6 @@ function updateScore() {
 }
 
 function checkGameOver() {
-  
   const totalPairs = GAME_STATE.size / 2;
   const foundPairs = GAME_STATE.scoreBlue + GAME_STATE.scoreOrange;
 
@@ -178,8 +230,11 @@ function checkGameOver() {
   }
 }
 
+/* ---------------------------------------------------
+   RESULT SCREEN (WINNER / GAME OVER / DRAW)
+--------------------------------------------------- */
+
 function showResultScreen() {
-  // Gewinner bestimmen
   let winner: "blue" | "orange" | "draw" = "draw";
 
   if (GAME_STATE.scoreBlue > GAME_STATE.scoreOrange) {
@@ -188,37 +243,63 @@ function showResultScreen() {
     winner = "orange";
   }
 
-  APP.innerHTML = `
-    <section class="game-over">
+  // Spielerzentrierte Logik
+  let screen: "blue" | "orange" | "draw" | "gameover" = winner;
 
-      <h2 class="winner-title ${winner}">
+  if (winner !== "draw" && winner !== GAME_STATE.selectedPlayer) {
+    screen = "gameover";
+  }
+
+  APP.innerHTML = `
+    <section class="winner-screen">
+
+      <!-- Konfetti nur bei Blue/Orange -->
+      ${
+        screen === "blue" || screen === "orange"
+          ? `<img class="confetti" src="/images/confetti.png" alt="confetti">`
+          : ""
+      }
+
+      <!-- Titel -->
+      <h2 class="winner-title ${screen}">
         ${
-          winner === "draw"
-            ? "Unentschieden!"
-            : winner === "blue"
-            ? "Blue Wins!"
-            : "Orange Wins!"
+          screen === "blue"
+            ? "The winner is BLUE PLAYER"
+            : screen === "orange"
+            ? "The winner is ORANGE PLAYER"
+            : screen === "draw"
+            ? "It's a<br>DRAW"
+            : "Game Over"
         }
       </h2>
 
-      <p class="winner blue">Blue: ${GAME_STATE.scoreBlue}</p>
-      <p class="winner orange">Orange: ${GAME_STATE.scoreOrange}</p>
+      <!-- Icons -->
+      ${
+        screen === "blue"
+          ? `<img class="winner-icon" src="/images/player-blue.png" alt="">`
+          : screen === "orange"
+          ? `<img class="winner-icon" src="/images/player-orange.png" alt="">`
+          : screen === "draw"
+          ? `<img class="winner-icon" src="/images/draw-icon.png" alt="">`
+          : ""
+      }
 
-      <div class="game-over__buttons">
-        <button id="restart">Restart</button>
-        <button id="back">Back to Settings</button>
+      <!-- Buttons -->
+      <div class="winner-buttons">
+        <button id="back">Back to start</button>
       </div>
 
     </section>
   `;
 
-  // Restart
-  document.getElementById("restart")!.addEventListener("click", () => {
-    renderGameBoard();
-  });
-
-  // Back to Settings
+  // Back Button
   document.getElementById("back")!.addEventListener("click", () => {
+
+    // Punkte zurücksetzen
+    GAME_STATE.currentPlayer = "blue";
+    GAME_STATE.scoreBlue = 0;
+    GAME_STATE.scoreOrange = 0;
+
     import("./setting-view").then((module) => module.renderSettings());
   });
 }
@@ -234,14 +315,11 @@ function updatePlayerHUD() {
   const blueScoreEl = document.getElementById("score-blue")!;
   const orangeScoreEl = document.getElementById("score-orange")!;
 
-  // Scores aktualisieren
   blueScoreEl.textContent = `Blue: ${GAME_STATE.scoreBlue}`;
   orangeScoreEl.textContent = `Orange: ${GAME_STATE.scoreOrange}`;
 
-  // Current Player anzeigen
   currentPlayerEl.textContent = `Current: ${GAME_STATE.currentPlayer}`;
 
-  // Styling je nach Player
   if (GAME_STATE.currentPlayer === "blue") {
     currentPlayerEl.classList.remove("player--orange");
     currentPlayerEl.classList.add("player--blue");
