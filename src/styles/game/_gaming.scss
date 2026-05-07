@@ -1,3 +1,7 @@
+/* ============================
+   GAMING THEME – BASE
+============================ */
+
 .game--gaming {
   background: url("/backgrounds/gaming-bg.jpg") center/cover no-repeat;
 
@@ -33,4 +37,81 @@
     color: white;
     box-shadow: 0 0 10px #ff4d4d;
   }
+}
+
+/* ============================
+   RESULT SCREEN BOX
+============================ */
+
+.game--gaming .game-over {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.65);
+  border: 2px solid #ff9d3b;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #ff9d3b;
+}
+
+/* ============================
+   BUTTONS
+============================ */
+
+.game--gaming .game-over button,
+.game--gaming .game-over__buttons button {
+  background: #ff9d3b;
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 0 10px #ff9d3b;
+}
+
+.game--gaming .game-over button:hover,
+.game--gaming .game-over__buttons button:hover {
+  background: #ffa94d;
+  box-shadow: 0 0 14px #ffa94d;
+}
+
+/* ============================
+   WINNER TITLE
+============================ */
+
+.game--gaming .winner-title.blue {
+  color: #4aa3ff;
+  text-shadow: 0 0 12px #4aa3ff;
+}
+
+.game--gaming .winner-title.orange {
+  color: #ff9d3b;
+  text-shadow: 0 0 12px #ff9d3b;
+}
+
+.game--gaming .winner-title.draw {
+  color: #fff;
+  text-shadow: 0 0 12px #fff;
+}
+
+/* ============================
+   WINNER ICONS
+============================ */
+
+.game--gaming .winner.blue::before {
+  content: "🧊";
+  text-shadow: 0 0 10px #4aa3ff;
+}
+
+.game--gaming .winner.orange::before {
+  content: "🔥";
+  text-shadow: 0 0 10px #ff9d3b;
+}
+
+/* ============================
+   WINNER COLORS
+============================ */
+
+.game--gaming .winner.blue {
+  color: #4aa3ff;
+  text-shadow: 0 0 8px #4aa3ff;
+}
+
+.game--gaming .winner.orange {
+  color: #ff9d3b;
+  text-shadow: 0 0 8px #ff9d3b;
 }

@@ -1,3 +1,7 @@
+/* ============================
+   CODE THEME – BASE
+============================ */
+
 .game--code {
   background-color: #303131;
 
@@ -28,4 +32,74 @@
     background: #4aa3ff;
     color: #fff;
   }
+}
+
+/* ============================
+   RESULT SCREEN BOX
+============================ */
+
+.game--code .game-over {
+  color: #e0e0e0;
+  background: #1a1a1a;
+  border: 2px solid #3a3a3a;
+  border-radius: 12px;
+}
+
+/* ============================
+   BUTTONS
+============================ */
+
+.game--code .game-over button,
+.game--code .game-over__buttons button {
+  background: #2d2d2d;
+  color: #4aa3ff;
+  border: 1px solid #4aa3ff;
+}
+
+.game--code .game-over button:hover,
+.game--code .game-over__buttons button:hover {
+  background: #4aa3ff;
+  color: #1a1a1a;
+}
+
+/* ============================
+   WINNER TITLE
+============================ */
+
+.game--code .winner-title.blue {
+  color: #4aa3ff;
+}
+
+.game--code .winner-title.orange {
+  color: #ff9d3b;
+}
+
+.game--code .winner-title.draw {
+  color: #ccc;
+}
+
+/* ============================
+   WINNER ICONS
+============================ */
+
+.game--code .winner.blue::before {
+  content: "👤";
+  opacity: 0.8;
+}
+
+.game--code .winner.orange::before {
+  content: "👤";
+  opacity: 0.8;
+}
+
+/* ============================
+   WINNER COLORS
+============================ */
+
+.game--code .winner.blue {
+  color: #4aa3ff;
+}
+
+.game--code .winner.orange {
+  color: #ff9d3b;
 }

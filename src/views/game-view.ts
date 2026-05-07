@@ -132,6 +132,7 @@ function checkForMatch() {
   if (match) {
     disableMatchedCards();
     updateScore();
+    checkGameOver();
     resetTurn();
   } else {
     unflipCards();
@@ -166,6 +167,63 @@ function updateScore() {
 
   updatePlayerHUD();
 }
+
+function checkGameOver() {
+  
+  const totalPairs = GAME_STATE.size / 2;
+  const foundPairs = GAME_STATE.scoreBlue + GAME_STATE.scoreOrange;
+
+  if (foundPairs === totalPairs) {
+    showResultScreen();
+  }
+}
+
+function showResultScreen() {
+  // Gewinner bestimmen
+  let winner: "blue" | "orange" | "draw" = "draw";
+
+  if (GAME_STATE.scoreBlue > GAME_STATE.scoreOrange) {
+    winner = "blue";
+  } else if (GAME_STATE.scoreOrange > GAME_STATE.scoreBlue) {
+    winner = "orange";
+  }
+
+  APP.innerHTML = `
+    <section class="game-over">
+
+      <h2 class="winner-title ${winner}">
+        ${
+          winner === "draw"
+            ? "Unentschieden!"
+            : winner === "blue"
+            ? "Blue Wins!"
+            : "Orange Wins!"
+        }
+      </h2>
+
+      <p class="winner blue">Blue: ${GAME_STATE.scoreBlue}</p>
+      <p class="winner orange">Orange: ${GAME_STATE.scoreOrange}</p>
+
+      <div class="game-over__buttons">
+        <button id="restart">Restart</button>
+        <button id="back">Back to Settings</button>
+      </div>
+
+    </section>
+  `;
+
+  // Restart
+  document.getElementById("restart")!.addEventListener("click", () => {
+    renderGameBoard();
+  });
+
+  // Back to Settings
+  document.getElementById("back")!.addEventListener("click", () => {
+    import("./setting-view").then((module) => module.renderSettings());
+  });
+}
+
+
 
 /* ---------------------------------------------------
    PLAYER SYSTEM
