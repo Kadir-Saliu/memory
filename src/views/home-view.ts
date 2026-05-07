@@ -1,3 +1,4 @@
+import { renderSettings } from "./setting-view";
 const APP = document.getElementById("app") as HTMLElement;
 
 /**
@@ -42,7 +43,7 @@ function getHomeTemplate(): string {
 function initHomeEvents(): void {
   const startBtn = document.getElementById("start-btn") as HTMLButtonElement;
   startBtn.addEventListener("click", () => {
-    console.log("Settings View kommt als Nächstes");
+    renderSettings();
     // später: renderSettings();
   });
 }
