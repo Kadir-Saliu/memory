@@ -8,12 +8,23 @@ export function renderGameBoard(): void {
 
 function getGameTemplate(): string {
   return `
-    <section class="game">
-      <h2 class="game__title">Memory Game</h2>
+    <section class="game game--${GAME_STATE.theme}">
 
-      <div class="game__board" id="game-board">
-        <!-- Karten werden dynamisch generiert -->
+      <div class="game__hud">
+        <div class="game__score">
+          <span class="player player--blue">Blue: 0</span>
+          <span class="player player--orange">Orange: 4</span>
+        </div>
+
+        <div class="game__current">
+          Current Player: <strong class="current-player">Blue</strong>
+        </div>
+
+        <button class="game__exit">Exit Game</button>
       </div>
+
+      <div class="game__board" id="game-board"></div>
+
     </section>
   `;
 }
@@ -21,17 +32,32 @@ function getGameTemplate(): string {
 function initGameBoard(): void {
   const board = document.getElementById("game-board")!;
   const size = GAME_STATE.size;
+  const theme = GAME_STATE.theme;
 
   // Grid dynamisch setzen
   if (size === 16) board.style.gridTemplateColumns = "repeat(4, 1fr)";
   if (size === 24) board.style.gridTemplateColumns = "repeat(6, 1fr)";
   if (size === 36) board.style.gridTemplateColumns = "repeat(6, 1fr)";
 
-  // Platzhalter-Karten generieren
   for (let i = 0; i < size; i++) {
     const card = document.createElement("div");
     card.classList.add("card");
-    card.textContent = `${i + 1}`;
+
+    card.innerHTML = `
+    <div class="card__inner">
+      <div class="card__front">
+        <img src="/cards/${theme}/back.png" alt="">
+      </div>
+      <div class="card__back">
+        <img src="/cards/${theme}/${i + 1}.png" alt="">
+      </div>
+    </div>
+  `;
+
+    card.addEventListener("click", () => {
+      card.classList.toggle("is-flipped");
+    });
+
     board.appendChild(card);
   }
 }

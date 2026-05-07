@@ -1,0 +1,13 @@
+@use "./components/cards";
+@use "./game/base";
+@use "./game/code";
+@use "./game/gaming";
+
+.card__front img,
+.card__back img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+

@@ -1,0 +1,36 @@
+.game--gaming {
+  background: url("/backgrounds/gaming-bg.jpg") center/cover no-repeat;
+
+  .game__hud {
+    background: rgba(0, 0, 0, 0.45);
+    border: 2px solid #ff9d3b;
+  }
+
+  .game__score {
+    background: rgba(255, 157, 59, 0.2);
+    padding: 8px 14px;
+    border-radius: 10px;
+  }
+
+  .player--blue {
+    color: #4aa3ff;
+    text-shadow: 0 0 6px #4aa3ff;
+  }
+
+  .player--orange {
+    color: #ff9d3b;
+    text-shadow: 0 0 6px #ff9d3b;
+  }
+
+  .current-player {
+    color: #ff9d3b;
+    font-weight: 700;
+    text-shadow: 0 0 8px #ff9d3b;
+  }
+
+  .game__exit {
+    background: #ff4d4d;
+    color: white;
+    box-shadow: 0 0 10px #ff4d4d;
+  }
+}
