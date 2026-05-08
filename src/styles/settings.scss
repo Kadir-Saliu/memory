@@ -114,6 +114,7 @@ main {
 
 .settings__summary {
   background: rgb(246, 246, 246);
+  min-height: 70px;
   padding: 1rem 1.2rem;
   border-radius: 12px;
   color: black;
@@ -127,8 +128,20 @@ main {
 }
 
 #summary-line {
-  font-size: 1.25rem; /* größerer Text */
-  font-weight: 600; /* etwas kräftiger */
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  /* verhindert Verschiebung */
+  min-width: 200px;
+  max-width: calc(100% - 140px); /* Platz für Start-Button */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  line-height: 1.2;
+  font-size: 1.25rem;
+  font-weight: 600;
   color: black;
 }
 
@@ -139,15 +152,20 @@ main {
   padding: 0 0.35rem;
 }
 
-.seperator {
-  color: yellow;
+.separator {
+  width: 10px; /* feste Breite */
+  text-align: center;
+  display: inline-block;
 }
 
 /* START BUTTON */
 .settings__start-btn {
-    display: flex;               /* Icon + Text nebeneinander */
-  align-items: center;         /* vertikal zentriert */
-  gap: 0.6rem;        
+  display: flex; /* Icon + Text nebeneinander */
+   width: 120px; /* feste Breite */
+  height: 42px; /* feste Höhe */
+  flex-shrink: 0; /* verhindert Verschiebung */
+  align-items: center; /* vertikal zentriert */
+  gap: 0.6rem;
   padding: 1rem;
   background: #f0ea6e;
   color: black;

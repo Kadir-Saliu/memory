@@ -1,5 +1,20 @@
 import { APP } from "../app";
 import { GAME_STATE } from "../state/state";
+const ICONS_GAMING = {
+  blue: `<img src="/images/icons/blue-game-theme-icon.png" class="hud-icon"> `,
+  orange: `<img src="/images/icons/orange-game-theme-icon.png" class="hud-icon">`,
+  currentBlue: `<img src="./images/icons/white-game-theme-icon.png">`,
+  currentOrange: `<img src="./images/icons/white-game-theme-icon.png">`,
+  exit: `<img src="/images/tags/exit-icon-code.png" class="hud-icon">`,
+};
+
+const ICONS_CODE = {
+  blue: `<img src="/images/tags/blue-tag-code.png" class="hud-icon">`,
+  orange: `<img src="/images/tags/orange-tag-code.png" class="hud-icon">`,
+  currentBlue: `<img src="/images/tags/blue-tag-code.png" class="hud-icon">`,
+  currentOrange: `<img src="/images/tags/orange-tag-code.png" class="hud-icon">`,
+  exit: `<img src="/images/tags/exit-icon-code.png" class="hud-icon">`,
+};
 
 export function renderGameBoard(): void {
   APP.innerHTML = getGameTemplate();
@@ -8,28 +23,48 @@ export function renderGameBoard(): void {
 
 function getGameTemplate(): string {
   return `
-    <section class="game game--${GAME_STATE.theme}">
+<section class="game game--${GAME_STATE.theme}">
 
-      <div class="game__hud">
-        <div id="score-blue" class="game__score player--blue">Blue: 0</div>
-        <div id="score-orange" class="game__score player--orange">Orange: 0</div>
-        <div id="current-player" class="current-player player--blue">Current: Blue</div>
-        <button class="game__exit">Exit Game</button>
-      </div>
+  <div class="game__hud">
 
-      <div class="game__board" id="game-board"></div>
+   <div class="hud__scores">
+  <div id="score-blue" class="game__score player--blue">
+    <span class="score-icon"></span>
+    <span class="score-text"></span>
+  </div>
 
-    </section>
+  <div id="score-orange" class="game__score player--orange">
+    <span class="score-icon"></span>
+    <span class="score-text"></span>
+  </div>
+</div>
+
+   <div id="current-player" class="current-player">
+  <span class="current-text"></span>
+  <span class="current-icon"></span>
+</div>
+
+    <button class="game__exit">
+  <span class="exit-icon"></span>
+  <span class="exit-text">Exit Game</span>
+</button>
+
+  </div>
+
+  <div class="game__board" id="game-board"></div>
+
+</section>
+
   `;
 }
 
 function initGameBoard(): void {
   document.addEventListener("keydown", (e) => {
-  if (e.key === "1") showResultScreenOverride("blue");
-  if (e.key === "2") showResultScreenOverride("orange");
-  if (e.key === "3") showResultScreenOverride("draw");
-  if (e.key === "4") showResultScreenOverride("gameover");
-});
+    if (e.key === "1") showResultScreenOverride("blue");
+    if (e.key === "2") showResultScreenOverride("orange");
+    if (e.key === "3") showResultScreenOverride("draw");
+    if (e.key === "4") showResultScreenOverride("gameover");
+  });
   const board = document.getElementById("game-board")!;
   const size = GAME_STATE.size;
   const theme = GAME_STATE.theme;
@@ -92,7 +127,9 @@ function initGameBoard(): void {
   updatePlayerHUD();
 }
 
-function showResultScreenOverride(screen: "blue" | "orange" | "draw" | "gameover") {
+function showResultScreenOverride(
+  screen: "blue" | "orange" | "draw" | "gameover",
+) {
   // exakt dieselbe Struktur wie showResultScreen()
   // nur ohne die Gewinnerlogik
   APP.innerHTML = `
@@ -109,10 +146,10 @@ function showResultScreenOverride(screen: "blue" | "orange" | "draw" | "gameover
           screen === "blue"
             ? "The winner is BLUE PLAYER"
             : screen === "orange"
-            ? "The winner is ORANGE PLAYER"
-            : screen === "draw"
-            ? "It's a<br>DRAW"
-            : "Game Over"
+              ? "The winner is ORANGE PLAYER"
+              : screen === "draw"
+                ? "It's a<br>DRAW"
+                : "Game Over"
         }
       </h2>
 
@@ -120,10 +157,10 @@ function showResultScreenOverride(screen: "blue" | "orange" | "draw" | "gameover
         screen === "blue"
           ? `<img class="winner-icon" src="/images/player-blue.png">`
           : screen === "orange"
-          ? `<img class="winner-icon" src="/images/player-orange.png">`
-          : screen === "draw"
-          ? `<img class="winner-icon" src="/images/draw-icon.png">`
-          : ""
+            ? `<img class="winner-icon" src="/images/player-orange.png">`
+            : screen === "draw"
+              ? `<img class="winner-icon" src="/images/draw-icon.png">`
+              : ""
       }
 
       <div class="winner-buttons">
@@ -137,7 +174,6 @@ function showResultScreenOverride(screen: "blue" | "orange" | "draw" | "gameover
     import("./setting-view").then((module) => module.renderSettings());
   });
 }
-
 
 /* ---------------------------------------------------
    SHUFFLE
@@ -266,10 +302,10 @@ function showResultScreen() {
           screen === "blue"
             ? "The winner is BLUE PLAYER"
             : screen === "orange"
-            ? "The winner is ORANGE PLAYER"
-            : screen === "draw"
-            ? "It's a<br>DRAW"
-            : "Game Over"
+              ? "The winner is ORANGE PLAYER"
+              : screen === "draw"
+                ? "It's a<br>DRAW"
+                : "Game Over"
         }
       </h2>
 
@@ -278,10 +314,10 @@ function showResultScreen() {
         screen === "blue"
           ? `<img class="winner-icon" src="/images/player-blue.png" alt="">`
           : screen === "orange"
-          ? `<img class="winner-icon" src="/images/player-orange.png" alt="">`
-          : screen === "draw"
-          ? `<img class="winner-icon" src="/images/draw-icon.png" alt="">`
-          : ""
+            ? `<img class="winner-icon" src="/images/player-orange.png" alt="">`
+            : screen === "draw"
+              ? `<img class="winner-icon" src="/images/draw-icon.png" alt="">`
+              : ""
       }
 
       <!-- Buttons -->
@@ -294,7 +330,6 @@ function showResultScreen() {
 
   // Back Button
   document.getElementById("back")!.addEventListener("click", () => {
-
     // Punkte zurücksetzen
     GAME_STATE.currentPlayer = "blue";
     GAME_STATE.scoreBlue = 0;
@@ -304,29 +339,50 @@ function showResultScreen() {
   });
 }
 
-
-
 /* ---------------------------------------------------
    PLAYER SYSTEM
 --------------------------------------------------- */
 
 function updatePlayerHUD() {
-  const currentPlayerEl = document.getElementById("current-player")!;
-  const blueScoreEl = document.getElementById("score-blue")!;
-  const orangeScoreEl = document.getElementById("score-orange")!;
+  const theme = GAME_STATE.theme; // "code" oder "gaming"
+  const current = GAME_STATE.currentPlayer; // "blue" oder "orange"
 
-  blueScoreEl.textContent = `Blue: ${GAME_STATE.scoreBlue}`;
-  orangeScoreEl.textContent = `Orange: ${GAME_STATE.scoreOrange}`;
+  // Icon-Sets je nach Theme
+  const ICONS = theme === "gaming" ? ICONS_GAMING : ICONS_CODE;
 
-  currentPlayerEl.textContent = `Current: ${GAME_STATE.currentPlayer}`;
+  // --- BLUE SCORE ---
+  const blueScoreEl = document.querySelector("#score-blue")!;
+  blueScoreEl.querySelector(".score-icon")!.innerHTML = ICONS.blue;
+  blueScoreEl.querySelector(".score-text")!.textContent =
+    theme === "gaming"
+      ? `${GAME_STATE.scoreBlue}` // Gaming Theme → nur Zahl
+      : `Blue ${GAME_STATE.scoreBlue}`; // Code Theme → Blue 0
 
-  if (GAME_STATE.currentPlayer === "blue") {
-    currentPlayerEl.classList.remove("player--orange");
-    currentPlayerEl.classList.add("player--blue");
-  } else {
-    currentPlayerEl.classList.remove("player--blue");
-    currentPlayerEl.classList.add("player--orange");
-  }
+  // --- ORANGE SCORE ---
+  const orangeScoreEl = document.querySelector("#score-orange")!;
+  orangeScoreEl.querySelector(".score-icon")!.innerHTML = ICONS.orange;
+  orangeScoreEl.querySelector(".score-text")!.textContent =
+    theme === "gaming"
+      ? `${GAME_STATE.scoreOrange}` // Gaming Theme → nur Zahl
+      : `Orange ${GAME_STATE.scoreOrange}`; // Code Theme → Orange 0
+
+  // --- CURRENT PLAYER ---
+  const currentPlayerEl = document.querySelector("#current-player")!;
+
+  currentPlayerEl.querySelector(".current-text")!.textContent =
+    "Current Player:";
+
+  currentPlayerEl.querySelector(".current-icon")!.innerHTML =
+    current === "blue" ? ICONS.currentBlue : ICONS.currentOrange;
+
+  currentPlayerEl.classList.remove("player--blue", "player--orange");
+  currentPlayerEl.classList.add(
+    current === "blue" ? "player--blue" : "player--orange",
+  );
+
+  // --- EXIT BUTTON ---
+  const exitBtn = document.querySelector(".game__exit")!;
+  exitBtn.querySelector(".exit-icon")!.innerHTML = ICONS.exit;
 }
 
 function switchPlayer() {

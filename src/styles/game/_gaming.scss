@@ -1,47 +1,62 @@
-/* ============================
-   GAMING THEME – BASE
-============================ */
+.game--gaming .player--blue {
+  color: #4aa3ff;
+}
+
+.game--gaming .player--orange {
+  color: #ff9d3b;
+}
 
 .game--gaming {
-  background: url("/backgrounds/gaming-bg.jpg") center/cover no-repeat;
+  background-color: rgb(41, 79, 96);
 
   .game__hud {
-    background: rgba(0, 0, 0, 0.45);
-    border: 2px solid #ff9d3b;
+    background-color: rgb(84, 93, 117);
+    border: none;
+  }
+
+  .hud__scores {
+    display: flex;
   }
 
   .game__score {
-    background: rgba(255, 157, 59, 0.2);
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 8px 14px;
-    border-radius: 10px;
-  }
-
-  .player--blue {
-    color: #4aa3ff;
-    text-shadow: 0 0 6px #4aa3ff;
-  }
-
-  .player--orange {
-    color: #ff9d3b;
-    text-shadow: 0 0 6px #ff9d3b;
   }
 
   .current-player {
-    color: #ff9d3b;
-    font-weight: 700;
-    text-shadow: 0 0 8px #ff9d3b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: white !important;
+  }
+
+  .current-player .current-icon img {
+    padding: 6px;
+    border-radius: 6px;
+  }
+
+  .current-player.player--blue .current-icon img {
+    background: #4aa3ff;
+  }
+
+  .current-player.player--orange .current-icon img {
+    background: #ff9d3b;
   }
 
   .game__exit {
-    background: #ff4d4d;
+    background: rgb(84, 93, 117);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     color: white;
-    box-shadow: 0 0 10px #ff4d4d;
+    border: 2px solid rgb(231, 28, 79);
   }
 }
-
-/* ============================
-   RESULT SCREEN BOX
-============================ */
 
 .game--gaming .game-over {
   color: #fff;
@@ -50,10 +65,6 @@
   border-radius: 12px;
   box-shadow: 0 0 20px #ff9d3b;
 }
-
-/* ============================
-   BUTTONS
-============================ */
 
 .game--gaming .game-over button,
 .game--gaming .game-over__buttons button {
@@ -69,49 +80,30 @@
   box-shadow: 0 0 14px #ffa94d;
 }
 
-/* ============================
-   WINNER TITLE
-============================ */
-
 .game--gaming .winner-title.blue {
   color: #4aa3ff;
-  text-shadow: 0 0 12px #4aa3ff;
 }
 
 .game--gaming .winner-title.orange {
   color: #ff9d3b;
-  text-shadow: 0 0 12px #ff9d3b;
 }
 
 .game--gaming .winner-title.draw {
   color: #fff;
-  text-shadow: 0 0 12px #fff;
 }
-
-/* ============================
-   WINNER ICONS
-============================ */
 
 .game--gaming .winner.blue::before {
   content: "🧊";
-  text-shadow: 0 0 10px #4aa3ff;
 }
 
 .game--gaming .winner.orange::before {
   content: "🔥";
-  text-shadow: 0 0 10px #ff9d3b;
 }
-
-/* ============================
-   WINNER COLORS
-============================ */
 
 .game--gaming .winner.blue {
   color: #4aa3ff;
-  text-shadow: 0 0 8px #4aa3ff;
 }
 
 .game--gaming .winner.orange {
   color: #ff9d3b;
-  text-shadow: 0 0 8px #ff9d3b;
 }

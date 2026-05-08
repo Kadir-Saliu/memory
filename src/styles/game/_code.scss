@@ -1,18 +1,32 @@
-/* ============================
-   CODE THEME – BASE
-============================ */
-
 .game--code {
   background-color: #303131;
 
   .game__hud {
-    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    gap: 32px;
+  }
+
+  .hud__scores {
+    display: flex;
+    align-items: center;
   }
 
   .game__score {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgb(65, 86, 82);
     padding: 8px 14px;
-    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hud-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    display: inline-block;
   }
 
   .player--blue {
@@ -24,19 +38,30 @@
   }
 
   .current-player {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     color: #4aa3ff;
     font-weight: 700;
   }
 
   .game__exit {
-    background: #4aa3ff;
+    background: rgb(65, 86, 82);
     color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .game__exit:hover {
+    background: #6bb6ff;
   }
 }
-
-/* ============================
-   RESULT SCREEN BOX
-============================ */
 
 .game--code .game-over {
   color: #e0e0e0;
@@ -44,10 +69,6 @@
   border: 2px solid #3a3a3a;
   border-radius: 12px;
 }
-
-/* ============================
-   BUTTONS
-============================ */
 
 .game--code .game-over button,
 .game--code .game-over__buttons button {
@@ -62,10 +83,6 @@
   color: #1a1a1a;
 }
 
-/* ============================
-   WINNER TITLE
-============================ */
-
 .game--code .winner-title.blue {
   color: #4aa3ff;
 }
@@ -78,10 +95,6 @@
   color: #ccc;
 }
 
-/* ============================
-   WINNER ICONS
-============================ */
-
 .game--code .winner.blue::before {
   content: "👤";
   opacity: 0.8;
@@ -91,10 +104,6 @@
   content: "👤";
   opacity: 0.8;
 }
-
-/* ============================
-   WINNER COLORS
-============================ */
 
 .game--code .winner.blue {
   color: #4aa3ff;
