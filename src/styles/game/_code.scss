@@ -1,6 +1,9 @@
 .game--code {
   background-color: #303131;
+  min-height: 100vh;
+  
 
+  /* HUD */
   .game__hud {
     display: flex;
     align-items: center;
@@ -45,6 +48,7 @@
     font-weight: 700;
   }
 
+  /* EXIT BUTTON */
   .game__exit {
     background: rgb(65, 86, 82);
     color: #fff;
@@ -63,6 +67,7 @@
   }
 }
 
+/* GAME OVER BOX (falls du sie nutzt) */
 .game--code .game-over {
   color: #e0e0e0;
   background: #1a1a1a;
@@ -83,6 +88,7 @@
   color: #1a1a1a;
 }
 
+/* WINNER COLORS */
 .game--code .winner-title.blue {
   color: #4aa3ff;
 }
@@ -95,11 +101,8 @@
   color: #ccc;
 }
 
-.game--code .winner.blue::before {
-  content: "👤";
-  opacity: 0.8;
-}
-
+/* WINNER ICONS */
+.game--code .winner.blue::before,
 .game--code .winner.orange::before {
   content: "👤";
   opacity: 0.8;
@@ -112,3 +115,81 @@
 .game--code .winner.orange {
   color: #ff9d3b;
 }
+
+/* ============================================
+   WINNER SCREEN (CODE THEME)
+============================================ */
+.winner-screen--code {
+  background: #303131;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  min-height: 100vh; // ← FIX
+  padding: 0 20px;
+
+  .winner-prefix {
+    display: block;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .winner-title.blue {
+    color: #3a8bff;
+  }
+
+  .winner-title.orange {
+    color: #ff8c00;
+  }
+
+  /* HUD-SCORES IM GAME-OVER-SCREEN */
+  .hud__scores {
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .game__score {
+    background: rgb(65, 86, 82);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .score-icon {
+    width: 32px;
+    height: 32px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+  }
+
+  .score-text {
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+  }
+}
+
+.winner-title.gameover {
+  font-size: 96px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.winner-title.draw {
+  font-size: 96px;              // große Schrift wie Game Over
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: rgb(77, 213, 188) !important;     // deine gewünschte Farbe
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+}
+
+

@@ -1,19 +1,14 @@
 .game {
-  min-height: 100vh;
-  padding: 20px;
+  height: 100vh;          // statt min-height
+  padding: 0;             // kein vertical padding
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  overflow: hidden;       // verhindert Scrollen
 }
 
 .game__hud {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 12px 20px;
-  border-radius: 12px;
-  color: white;
-  backdrop-filter: blur(6px);
+  flex-shrink: 0;         // HUD bleibt oben fix
 }
 
 .game__score {
@@ -34,4 +29,3 @@
   display: grid;
   gap: 12px;
 }
-

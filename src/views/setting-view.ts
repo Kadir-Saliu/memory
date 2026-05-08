@@ -118,10 +118,8 @@ function initSettingsEvents(): void {
 
   optionGroups.forEach((group) => {
     group.addEventListener("click", (e) => {
-      const target = e.target as HTMLElement;
-
-      const option = target.closest(".settings__option");
-      if (!option) return;
+  const option = (e.target as HTMLElement).closest(".settings__option");
+  if (!option) return;
 
       group.querySelectorAll(".settings__option").forEach((opt) => {
         opt.classList.remove("is-active");
