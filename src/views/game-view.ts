@@ -87,8 +87,23 @@ function initGameBoard(): void {
   const size = GAME_STATE.size;
   const theme = GAME_STATE.theme;
 
+  // EXIT GAME BUTTON → Dialog öffnen
   const exitBtn = document.querySelector(".game__exit")!;
   exitBtn.addEventListener("click", () => {
+    document.querySelector(".exit-dialog-overlay")!.classList.remove("hidden");
+  });
+
+  // EXIT DIALOG BUTTONS
+  const cancelBtn = document.querySelector(".exit-dialog__cancel")!;
+  const confirmBtn = document.querySelector(".exit-dialog__confirm")!;
+
+  // Zurück ins Spiel
+  cancelBtn.addEventListener("click", () => {
+    document.querySelector(".exit-dialog-overlay")!.classList.add("hidden");
+  });
+
+  // Spiel verlassen → zurück zu Settings
+  confirmBtn.addEventListener("click", () => {
     GAME_STATE.currentPlayer = "blue";
     GAME_STATE.scoreBlue = 0;
     GAME_STATE.scoreOrange = 0;
@@ -96,12 +111,16 @@ function initGameBoard(): void {
     import("./setting-view").then((module) => {
       module.renderSettings();
     });
+
+    document.querySelector(".exit-dialog-overlay")!.classList.add("hidden");
   });
 
+  // GRID SETUP
   if (size === 16) board.style.gridTemplateColumns = "repeat(4, 1fr)";
   if (size === 24) board.style.gridTemplateColumns = "repeat(6, 1fr)";
   if (size === 36) board.style.gridTemplateColumns = "repeat(6, 1fr)";
 
+  // PAARE ERZEUGEN
   const pairCount = size / 2;
   let cardsArray: number[] = [];
 
@@ -110,8 +129,10 @@ function initGameBoard(): void {
     cardsArray.push(i);
   }
 
+  // SHUFFLE
   cardsArray = shuffle(cardsArray);
 
+  // KARTEN RENDERN
   cardsArray.forEach((num) => {
     const card = document.createElement("div");
     card.classList.add("card");
@@ -249,7 +270,6 @@ function showResultScreenOverride(
     import("./setting-view").then((module) => module.renderSettings());
   });
 }
-
 
 function shuffle(array: any[]) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -456,6 +476,7 @@ function updatePlayerHUD() {
 
   const exitBtn = document.querySelector(".game__exit")!;
   exitBtn.querySelector(".exit-icon")!.innerHTML = ICONS.exit;
+  exitBtn.querySelector(".exit-text")!.textContent = "Exit Game";
 }
 
 function switchPlayer() {
