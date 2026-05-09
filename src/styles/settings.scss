@@ -3,7 +3,7 @@ main {
 }
 
 .settings {
-  padding: 100px 200px;
+  padding: 50px 200px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -176,5 +176,67 @@ main {
 }
 
 .settings__start-btn:hover {
-  background: #e5dd5f;
+  transform: scale(1.05); /* Button wird größer */
+  background-color: #e0d85f; /* leicht dunkler */
 }
+
+.settings__start-btn:hover .start-btn__icon {
+  transform: rotate(-30deg); /* Icon dreht leicht nach links */
+}
+
+.settings__start-btn:disabled {
+  background-color: rgb(219,219,214);
+  cursor: default;
+  opacity: 1;
+}
+
+
+.settings__title-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem; /* Abstand zwischen Titel und Underline */
+  margin-bottom: 2rem; /* Abstand nach unten */
+}
+
+.settings__title{
+  padding-left: 28px;
+  font-size: 56px;
+  margin-bottom: -0.7rem;
+}
+
+.settings__underline {
+  width: 263px;
+  height: auto;
+}
+
+.settings__option {
+  position: relative;
+  padding-right: 40px; /* Platz für die Line rechts */
+}
+
+.settings__option::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 250px; /* DEINE Position */
+  width: 70px; /* DEINE Breite */
+  height: 24px; /* DEINE Höhe */
+  transform: translateY(-50%);
+  background-image: url("/images/option-line.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+/* ⭐ Active zeigt die Line bei ALLEN Optionen */
+.settings__option.is-active::after {
+  opacity: 1;
+}
+
+/* ⭐ Hover zeigt die Line NUR bei Themes */
+.settings__option[data-theme]:hover::after {
+  opacity: 1;
+}
+

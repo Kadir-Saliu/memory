@@ -9,7 +9,14 @@ function getSettingsTemplate(): string {
   return `
     <section class="settings">
 
-      <h2 class="settings__title">Settings</h2>
+   <div class="settings__title-block">
+  <h2 class="settings__title">Settings</h2>
+
+  <svg class="settings__underline" width="263" height="24" viewBox="0 0 263 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M-0.000152588 11.547L11.5469 23.094L23.0939 11.547L11.5469 -8.58307e-06L-0.000152588 11.547ZM262.547 11.547V9.547L11.5469 9.547V11.547V13.547L262.547 13.547V11.547Z" fill="#F0EA6E"/>
+  </svg>
+</div>
+
 
       <div class="settings__layout">
 
@@ -19,13 +26,13 @@ function getSettingsTemplate(): string {
           <!-- GAME THEMES -->
           <div class="settings__group">
             <div class="settings__header">
-              <img src="/game-theme-icon.png" alt="">
+              <img src="/game-theme-icon.png" alt="Game theme icon">
               <h3 class="settings__subtitle">Game themes</h3>
             </div>
 
             <div class="settings__options">
 
-              <div class="settings__option is-active" data-theme="code">
+              <div class="settings__option" data-theme="code">
                 <span class="settings__checkbox"></span>
                 <span class="settings__label">Code vibes theme</span>
               </div>
@@ -41,13 +48,13 @@ function getSettingsTemplate(): string {
           <!-- PLAYER -->
           <div class="settings__group">
             <div class="settings__header">
-              <img src="/choose-player-icon.png" alt="">
+              <img src="/choose-player-icon.png" alt="Choose player icon">
               <h3 class="settings__subtitle">Choose player</h3>
             </div>
 
             <div class="settings__options">
 
-              <div class="settings__option is-active" data-player="blue">
+              <div class="settings__option" data-player="blue">
                 <span class="settings__checkbox"></span>
                 <span class="settings__label">Blue</span>
               </div>
@@ -63,13 +70,13 @@ function getSettingsTemplate(): string {
           <!-- BOARD SIZE -->
           <div class="settings__group">
             <div class="settings__header">
-              <img src="/board-size-icon.png" alt="">
+              <img src="/board-size-icon.png" alt="Board size icon">
               <h3 class="settings__subtitle">Board size</h3>
             </div>
 
             <div class="settings__options">
 
-              <div class="settings__option is-active" data-size="16">
+              <div class="settings__option" data-size="16">
                 <span class="settings__checkbox"></span>
                 <span class="settings__label">16 cards</span>
               </div>
@@ -97,13 +104,13 @@ function getSettingsTemplate(): string {
           </div>
 
           <div class="settings__summary">
-  <p id="summary-line">Code vibes theme / Blue / 16 cards</p>
+            <p id="summary-line">Theme / Player / Board size</p>
 
-  <button id="start-game" class="settings__start-btn">
-    <img src="/playbutton.svg" class="start-icon" alt="">
-    Start
-  </button>
-</div>
+            <button id="start-game" class="settings__start-btn" disabled>
+              <img src="/playbutton.svg" class="start-icon" alt="">
+              Start
+            </button>
+          </div>
 
         </div>
 
@@ -115,24 +122,59 @@ function getSettingsTemplate(): string {
 
 function initSettingsEvents(): void {
   const optionGroups = document.querySelectorAll(".settings__options");
+  const previewImg = document.getElementById("preview-img") as HTMLImageElement;
+  const startBtn = document.getElementById("start-game") as HTMLButtonElement;
 
+  // ⭐ CLICK EVENTS (Theme, Player, Size)
   optionGroups.forEach((group) => {
     group.addEventListener("click", (e) => {
-  const option = (e.target as HTMLElement).closest(".settings__option");
-  if (!option) return;
+      const option = (e.target as HTMLElement).closest(".settings__option");
+      if (!option) return;
 
+      // Alle deaktivieren
       group.querySelectorAll(".settings__option").forEach((opt) => {
         opt.classList.remove("is-active");
       });
 
+      // Geklickte aktivieren
       option.classList.add("is-active");
 
+      // Summary aktualisieren
       updateSummary(option as HTMLElement);
     });
   });
 
+  // ⭐ HOVER PREVIEW NUR FÜR THEMES
+  const themeOptions = document.querySelectorAll(
+    ".settings__option[data-theme]",
+  );
+
+  themeOptions.forEach((opt) => {
+    const theme = opt.getAttribute("data-theme");
+
+    // Hover → Preview ändern
+    opt.addEventListener("mouseenter", () => {
+      previewImg.src = `/preview/${theme}-theme.png`;
+    });
+
+    // Hover verlassen → Preview zurücksetzen
+    opt.addEventListener("mouseleave", () => {
+      const activeTheme = document
+        .querySelector(".settings__option[data-theme].is-active")
+        ?.getAttribute("data-theme");
+
+      if (activeTheme) {
+        previewImg.src = `/preview/${activeTheme}-theme.png`;
+      } else {
+        // Wenn noch nichts ausgewählt → Code Theme anzeigen
+        previewImg.src = `/preview/code-theme.png`;
+      }
+    });
+  });
+
   // ⭐ Start-Button Navigation
-  document.getElementById("start-game")?.addEventListener("click", () => {
+  startBtn.addEventListener("click", () => {
+    if (startBtn.disabled) return; // Sicherheit
     saveSettingsToState();
     renderGameBoard();
   });
@@ -141,19 +183,21 @@ function initSettingsEvents(): void {
 function updateSummary(option: HTMLElement) {
   const summaryLine = document.getElementById("summary-line")!;
   const previewImg = document.getElementById("preview-img") as HTMLImageElement;
+  const startBtn = document.getElementById("start-game") as HTMLButtonElement;
 
-  const theme =
-    document
-      .querySelector(".settings__option[data-theme].is-active")
-      ?.textContent?.trim() || "Code vibes theme";
-  const player =
-    document
-      .querySelector(".settings__option[data-player].is-active")
-      ?.textContent?.trim() || "Blue";
-  const size =
-    document
-      .querySelector(".settings__option[data-size].is-active")
-      ?.textContent?.trim() || "16 cards";
+  const themeEl = document.querySelector(
+    ".settings__option[data-theme].is-active",
+  );
+  const playerEl = document.querySelector(
+    ".settings__option[data-player].is-active",
+  );
+  const sizeEl = document.querySelector(
+    ".settings__option[data-size].is-active",
+  );
+
+  const theme = themeEl?.textContent?.trim() || "Theme";
+  const player = playerEl?.textContent?.trim() || "Player";
+  const size = sizeEl?.textContent?.trim() || "Board size";
 
   // Preview aktualisieren
   if (option.dataset.theme) {
@@ -162,12 +206,19 @@ function updateSummary(option: HTMLElement) {
 
   // Summary aktualisieren
   summaryLine.innerHTML = `
-  ${theme}
-  <span class="separator">/</span>
-  ${player}
-  <span class="separator">/</span>
-  ${size}
-`;
+    ${theme}
+    <span class="separator">/</span>
+    ${player}
+    <span class="separator">/</span>
+    ${size}
+  `;
+
+  // Start-Button aktivieren, wenn ALLE gewählt wurden
+  if (themeEl && playerEl && sizeEl) {
+    startBtn.disabled = false;
+  } else {
+    startBtn.disabled = true;
+  }
 }
 
 import { GAME_STATE } from "../state/state";
