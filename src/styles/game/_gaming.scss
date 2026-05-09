@@ -1,16 +1,24 @@
-.game--gaming .player--blue {
-  color: #4aa3ff;
-}
-
-.game--gaming .player--orange {
-  color: #ff9d3b;
-}
-
+/* =========================================
+   GAMING THEME – GLOBAL SCREEN FIX
+   ========================================= */
 .game--gaming {
+  height: 100vh;
+  overflow: hidden;
   background-color: rgb(41, 79, 96);
 
+  .game__board {
+    margin-top: 40px;
+  }
+
   .game__hud {
+    max-width: 80%;
+    margin: 40px auto 0 auto;
+    width: 100%;
+    padding-bottom: 20px;
     background-color: rgb(84, 93, 117);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border: none;
   }
 
@@ -58,6 +66,20 @@
   }
 }
 
+/* =========================================
+   PLAYER COLORS
+   ========================================= */
+.game--gaming .player--blue {
+  color: #4aa3ff;
+}
+
+.game--gaming .player--orange {
+  color: #ff9d3b;
+}
+
+/* =========================================
+   GAME OVER SCREEN
+   ========================================= */
 .game--gaming .game-over {
   color: #fff;
   background: rgba(0, 0, 0, 0.65);
@@ -80,6 +102,9 @@
   box-shadow: 0 0 14px #ffa94d;
 }
 
+/* =========================================
+   WINNER TITLE COLORS
+   ========================================= */
 .game--gaming .winner-title.blue {
   color: #4aa3ff;
 }
@@ -88,10 +113,16 @@
   color: #ff9d3b;
 }
 
-.game--gaming .winner-title.draw {
-  color: #fff;
+/* =========================================
+   DRAW COLOR (Gaming Theme)
+   ========================================= */
+.winner-screen--gaming .winner-title.draw {
+  color: rgb(237, 28, 118) !important;
 }
 
+/* =========================================
+   WINNER ICON EMOJIS
+   ========================================= */
 .game--gaming .winner.blue::before {
   content: "🧊";
 }
@@ -107,3 +138,57 @@
 .game--gaming .winner.orange {
   color: #ff9d3b;
 }
+
+/* =========================================
+   WINNER SCREEN – GAMING THEME
+   ========================================= */
+.winner-screen--gaming {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100vh;
+  overflow: hidden;
+
+  background-color: rgb(41, 79, 96);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .winner-buttons button {
+    background-color: rgb(57, 75, 97);
+    border: 2px solid rgb(231, 28, 79);
+  }
+
+  .winner-title.draw {
+    color: rgb(237, 28, 118);
+  }
+}
+
+.winner-screen--gaming .hud__scores {
+  display: flex;
+  margin: 20px 0;
+}
+
+.winner-screen--gaming .game__score {
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 14px;
+ 
+}
+
+.winner-screen--gaming .game__score .score-icon img {
+  width: 28px;
+  height: 28px;
+}
+
+.winner-screen--gaming .game__score.player--blue {
+  color: #4aa3ff;
+}
+
+.winner-screen--gaming .game__score.player--orange {
+  color: #ff9d3b;
+}
+

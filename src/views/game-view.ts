@@ -143,9 +143,9 @@ function showResultScreenOverride(
   const ICONS =
     theme === "gaming"
       ? {
-          blue: `/images/icons/blue-game-theme-icon.png`,
-          orange: `/images/icons/orange-game-theme-icon.png`,
-          draw: `/images/icons/draw-game-theme.png`,
+          blue: `/images/icons/pokal-game-icon.png`,
+          orange: `/images/icons/pokal-game-icon.png`,
+          draw: `images/draw-game-icon.png`,
         }
       : {
           blue: `/images/player-blue.png`,
@@ -213,7 +213,7 @@ function showResultScreenOverride(
   }
 
     <div class="winner-buttons">
-      <button id="back">Back to start</button>
+      <button id="back">${theme === "gaming" ? "Home" : "Back to start"}</button>
     </div>
 
   </section>
@@ -235,14 +235,21 @@ function showResultScreenOverride(
       "#score-orange .score-icon",
     ) as HTMLElement;
 
-    if (blueIcon) blueIcon.style.backgroundImage = `url('${ICONS.blue}')`;
-    if (orangeIcon) orangeIcon.style.backgroundImage = `url('${ICONS.orange}')`;
+    // ⭐ GENAU DAS HIER HAST DU WOLLEN — NICHTS ANDERES
+    if (theme === "gaming") {
+      if (blueIcon) blueIcon.innerHTML = ICONS_GAMING.blue;
+      if (orangeIcon) orangeIcon.innerHTML = ICONS_GAMING.orange;
+    } else {
+      if (blueIcon) blueIcon.innerHTML = ICONS_CODE.blue;
+      if (orangeIcon) orangeIcon.innerHTML = ICONS_CODE.orange;
+    }
   }
 
   document.getElementById("back")!.addEventListener("click", () => {
     import("./setting-view").then((module) => module.renderSettings());
   });
 }
+
 
 function shuffle(array: any[]) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -399,7 +406,7 @@ function showResultScreen() {
       ${icon}
 
       <div class="winner-buttons">
-        <button id="back">Back to start</button>
+        <button id="back">${theme === "gaming" ? "Home" : "Back to start"}</button>
       </div>
 
     </section>
