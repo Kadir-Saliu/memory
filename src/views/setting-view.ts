@@ -1,10 +1,21 @@
 import { APP } from "../app";
 
+/**
+ * Renders the Settings screen into the main application container.
+ * Injects the HTML template and initializes all event listeners.
+ */
 export function renderSettings(): void {
   APP.innerHTML = getSettingsTemplate();
   initSettingsEvents();
 }
 
+/**
+ * Returns the full HTML template for the Settings screen.
+ * Includes theme selection, player selection, board size selection,
+ * preview image, summary line, and start button.
+ *
+ * @returns The complete HTML markup for the settings view.
+ */
 function getSettingsTemplate(): string {
   return `
     <section class="settings">
@@ -120,31 +131,34 @@ function getSettingsTemplate(): string {
   `;
 }
 
+/**
+ * Initializes all event listeners for the Settings screen.
+ * Handles:
+ * - Click selection for theme, player, and board size
+ * - Hover preview for themes
+ * - Summary updates
+ * - Start button activation and navigation
+ */
 function initSettingsEvents(): void {
   const optionGroups = document.querySelectorAll(".settings__options");
   const previewImg = document.getElementById("preview-img") as HTMLImageElement;
   const startBtn = document.getElementById("start-game") as HTMLButtonElement;
 
-  // ⭐ CLICK EVENTS (Theme, Player, Size)
   optionGroups.forEach((group) => {
     group.addEventListener("click", (e) => {
       const option = (e.target as HTMLElement).closest(".settings__option");
       if (!option) return;
 
-      // Alle deaktivieren
       group.querySelectorAll(".settings__option").forEach((opt) => {
         opt.classList.remove("is-active");
       });
 
-      // Geklickte aktivieren
       option.classList.add("is-active");
 
-      // Summary aktualisieren
       updateSummary(option as HTMLElement);
     });
   });
 
-  // ⭐ HOVER PREVIEW NUR FÜR THEMES
   const themeOptions = document.querySelectorAll(
     ".settings__option[data-theme]",
   );
@@ -152,12 +166,10 @@ function initSettingsEvents(): void {
   themeOptions.forEach((opt) => {
     const theme = opt.getAttribute("data-theme");
 
-    // Hover → Preview ändern
     opt.addEventListener("mouseenter", () => {
       previewImg.src = `/preview/${theme}-theme.png`;
     });
 
-    // Hover verlassen → Preview zurücksetzen
     opt.addEventListener("mouseleave", () => {
       const activeTheme = document
         .querySelector(".settings__option[data-theme].is-active")
@@ -166,20 +178,24 @@ function initSettingsEvents(): void {
       if (activeTheme) {
         previewImg.src = `/preview/${activeTheme}-theme.png`;
       } else {
-        // Wenn noch nichts ausgewählt → Code Theme anzeigen
         previewImg.src = `/preview/code-theme.png`;
       }
     });
   });
 
-  // ⭐ Start-Button Navigation
   startBtn.addEventListener("click", () => {
-    if (startBtn.disabled) return; // Sicherheit
+    if (startBtn.disabled) return;
     saveSettingsToState();
     renderGameBoard();
   });
 }
 
+/**
+ * Updates the summary line and preview image based on the selected option.
+ * Enables the Start button once all required selections are made.
+ *
+ * @param option The clicked settings option element.
+ */
 function updateSummary(option: HTMLElement) {
   const summaryLine = document.getElementById("summary-line")!;
   const previewImg = document.getElementById("preview-img") as HTMLImageElement;
@@ -199,12 +215,10 @@ function updateSummary(option: HTMLElement) {
   const player = playerEl?.textContent?.trim() || "Player";
   const size = sizeEl?.textContent?.trim() || "Board size";
 
-  // Preview aktualisieren
   if (option.dataset.theme) {
     previewImg.src = `/preview/${option.dataset.theme}-theme.png`;
   }
 
-  // Summary aktualisieren
   summaryLine.innerHTML = `
     ${theme}
     <span class="separator">/</span>
@@ -213,7 +227,6 @@ function updateSummary(option: HTMLElement) {
     ${size}
   `;
 
-  // Start-Button aktivieren, wenn ALLE gewählt wurden
   if (themeEl && playerEl && sizeEl) {
     startBtn.disabled = false;
   } else {
@@ -224,6 +237,10 @@ function updateSummary(option: HTMLElement) {
 import { GAME_STATE } from "../state/state";
 import { renderGameBoard } from "../views/game-view";
 
+/**
+ * Saves the selected settings (theme, player, board size)
+ * into the global GAME_STATE object.
+ */
 function saveSettingsToState() {
   GAME_STATE.theme =
     document
