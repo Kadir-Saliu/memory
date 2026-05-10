@@ -10,14 +10,12 @@ main {
   color: black;
 }
 
-/* TITLE */
 .settings__title {
   font-size: 2rem;
   margin-bottom: 2rem;
   color: black;
 }
 
-/* 2-COLUMN LAYOUT */
 .settings__layout {
   display: flex;
   gap: 3rem;
@@ -25,7 +23,6 @@ main {
   align-items: stretch;
 }
 
-/* LEFT + RIGHT SAME HEIGHT */
 .settings__left,
 .settings__right {
   flex: 1;
@@ -35,7 +32,6 @@ main {
   height: 100%;
 }
 
-/* SECTION HEADER (ICON + H3) */
 .settings__header {
   display: flex;
   align-items: center;
@@ -47,7 +43,6 @@ main {
   color: black;
 }
 
-/* OPTION ROW (Checkbox + Label) */
 .settings__options {
   display: flex;
   flex-direction: column;
@@ -64,9 +59,10 @@ main {
   border-radius: 8px;
   transition: 0.2s ease;
   color: black;
+  position: relative;
+  padding-right: 40px;
 }
 
-/* Kreis (Checkbox) */
 .settings__checkbox {
   width: 18px;
   height: 18px;
@@ -76,14 +72,12 @@ main {
   transition: 0.2s ease;
 }
 
-/* Text */
 .settings__label {
   font-size: 1.1rem;
   color: black;
   transition: 0.2s ease;
 }
 
-/* Aktiver Zustand */
 .settings__option.is-active .settings__checkbox {
   background: black;
 }
@@ -92,20 +86,19 @@ main {
   color: black;
 }
 
-/* PREVIEW BOX */
 .settings__preview {
   border-radius: 14px;
   padding: 1.2rem;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  min-height: 260px; /* verhindert zu große Höhe */
-  max-height: 380px; /* verhindert zu große Höhe */
+  min-height: 260px;
+  max-height: 380px;
 }
 
 .settings__preview img {
-  width: 80%; /* kleiner */
-  max-width: 380px; /* maximale Breite */
+  width: 80%;
+  max-width: 380px;
   height: auto;
   border-radius: 12px;
   object-fit: contain;
@@ -122,7 +115,7 @@ main {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  font-size: 1.15rem; /* etwas größer */
+  font-size: 1.15rem;
   line-height: 1.4;
   border: 1px solid #e0e0e0;
 }
@@ -131,14 +124,11 @@ main {
   display: flex;
   align-items: center;
   gap: 6px;
-
-  /* verhindert Verschiebung */
   min-width: 200px;
-  max-width: calc(100% - 140px); /* Platz für Start-Button */
+  max-width: calc(100% - 140px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
   line-height: 1.2;
   font-size: 1.25rem;
   font-weight: 600;
@@ -147,24 +137,23 @@ main {
 
 #summary-line .separator {
   color: #f0ea6e;
-  font-size: 1.35rem; /* Schrägstriche größer */
-  font-weight: 700; /* dicker */
+  font-size: 1.35rem;
+  font-weight: 700;
   padding: 0 0.35rem;
 }
 
 .separator {
-  width: 10px; /* feste Breite */
+  width: 10px;
   text-align: center;
   display: inline-block;
 }
 
-/* START BUTTON */
 .settings__start-btn {
-  display: flex; /* Icon + Text nebeneinander */
-   width: 120px; /* feste Breite */
-  height: 42px; /* feste Höhe */
-  flex-shrink: 0; /* verhindert Verschiebung */
-  align-items: center; /* vertikal zentriert */
+  display: flex;
+  width: 120px;
+  height: 42px;
+  flex-shrink: 0;
+  align-items: center;
   gap: 0.6rem;
   padding: 1rem;
   background: #f0ea6e;
@@ -176,30 +165,29 @@ main {
 }
 
 .settings__start-btn:hover {
-  transform: scale(1.05); /* Button wird größer */
-  background-color: #e0d85f; /* leicht dunkler */
+  transform: scale(1.05);
+  background-color: #e0d85f;
 }
 
 .settings__start-btn:hover .start-btn__icon {
-  transform: rotate(-30deg); /* Icon dreht leicht nach links */
+  transform: rotate(-30deg);
 }
 
 .settings__start-btn:disabled {
-  background-color: rgb(219,219,214);
+  background-color: rgb(219, 219, 214);
   cursor: default;
   opacity: 1;
 }
-
 
 .settings__title-block {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.3rem; /* Abstand zwischen Titel und Underline */
-  margin-bottom: 2rem; /* Abstand nach unten */
+  gap: 0.3rem;
+  margin-bottom: 2rem;
 }
 
-.settings__title{
+.settings__title {
   padding-left: 28px;
   font-size: 56px;
   margin-bottom: -0.7rem;
@@ -210,18 +198,13 @@ main {
   height: auto;
 }
 
-.settings__option {
-  position: relative;
-  padding-right: 40px; /* Platz für die Line rechts */
-}
-
 .settings__option::after {
   content: "";
   position: absolute;
   top: 50%;
-  left: 250px; /* DEINE Position */
-  width: 70px; /* DEINE Breite */
-  height: 24px; /* DEINE Höhe */
+  left: 250px;
+  width: 70px;
+  height: 24px;
   transform: translateY(-50%);
   background-image: url("/images/option-line.svg");
   background-repeat: no-repeat;
@@ -230,13 +213,10 @@ main {
   transition: opacity 0.15s ease;
 }
 
-/* ⭐ Active zeigt die Line bei ALLEN Optionen */
 .settings__option.is-active::after {
   opacity: 1;
 }
 
-/* ⭐ Hover zeigt die Line NUR bei Themes */
 .settings__option[data-theme]:hover::after {
   opacity: 1;
 }
-
