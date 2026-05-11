@@ -21,7 +21,7 @@ export function getWinnerScreenData(
 
   const confetti =
     (screen === "blue" || screen === "orange") && theme === "code"
-      ? `<img class="confetti" src="/images/confetti.png">`
+      ? `<img class="confetti" src="./images/confetti.png">`
       : "";
 
   const icon =

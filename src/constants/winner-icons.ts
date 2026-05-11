@@ -25,7 +25,7 @@ export const WINNER_ICONS_GAMING = {
  * All values are file paths to the respective icon images.
  */
 export const WINNER_ICONS_CODE = {
-  blue: `/images/player-blue.png`,
-  orange: `/images/player-orange.png`,
-  draw: `/images/draw-icon.png`,
+  blue: `./images/player-blue.png`,
+  orange: `./images/player-orange.png`,
+  draw: `./images/draw-icon.png`,
 };
