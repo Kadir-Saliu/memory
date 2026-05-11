@@ -1,14 +1,18 @@
+main .game--code {
+  background-color: #303131;
+}
+
 .game {
-  height: 100vh;          // statt min-height
-  padding: 0;             // kein vertical padding
+  height: 100vh; // statt min-height
+  padding: 0; // kein vertical padding
   display: flex;
   flex-direction: column;
-  overflow: hidden;       // verhindert Scrollen
+  overflow: hidden; // verhindert Scrollen
 }
 
 .game__hud {
   padding: 12px 20px;
-  flex-shrink: 0;         // HUD bleibt oben fix
+  flex-shrink: 0; // HUD bleibt oben fix
 }
 
 .game__score {

@@ -1,7 +1,11 @@
+main .game--code{
+   background-color: #303131 !important;
+}
+
 .game--code {
   background-color: #303131;
   min-height: 100vh;
-  
+  width: 100%;
 
   /* HUD */
   .game__hud {
@@ -183,13 +187,11 @@
 }
 
 .winner-title.draw {
-  font-size: 96px;              // große Schrift wie Game Over
+  font-size: 96px; // große Schrift wie Game Over
   font-weight: 800;
   letter-spacing: 2px;
-  color: rgb(77, 213, 188) !important;     // deine gewünschte Farbe
+  color: rgb(77, 213, 188) !important; // deine gewünschte Farbe
   text-transform: uppercase;
   margin: 0;
   padding: 0;
 }
-
-

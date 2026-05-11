@@ -8,6 +8,12 @@ body {
   color: white;
 }
 
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
 .home {
   min-height: 100vh;
   background-color: rgb(47, 49, 49);
@@ -76,4 +82,13 @@ body {
 
 .controller-side path {
   fill: rgb(57, 59, 52);
+}
+
+.controller-icon-side {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.play-btn:hover .controller-icon-side {
+  transform: rotate(-15deg) translateX(-2px);
 }

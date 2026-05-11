@@ -16,8 +16,14 @@ import {
 import { handleCardClick, setGameOverCallback } from "../components/card-logic";
 
 /**
- * Handles debug keyboard shortcuts for the "code" theme.
+ * Registers debug keyboard shortcuts for the "code" theme.
  * Allows manually triggering result screens for testing.
+ *
+ * Keys:
+ * - 1 → Blue wins
+ * - 2 → Orange wins
+ * - 3 → Draw
+ * - 4 → Game over
  */
 document.addEventListener("keydown", (e) => {
   if (GAME_STATE.theme !== "code") return;
@@ -28,8 +34,13 @@ document.addEventListener("keydown", (e) => {
 });
 
 /**
- * Handles debug keyboard shortcuts for the "gaming" theme.
- * Allows manually triggering result screens for testing.
+ * Registers debug keyboard shortcuts for the "gaming" theme.
+ *
+ * Keys:
+ * - 5 → Blue wins
+ * - 6 → Orange wins
+ * - 7 → Draw
+ * - 8 → Game over
  */
 document.addEventListener("keydown", (e) => {
   if (GAME_STATE.theme !== "gaming") return;
@@ -40,8 +51,13 @@ document.addEventListener("keydown", (e) => {
 });
 
 /**
- * Renders the game board by injecting the game template and exit dialog.
- * After rendering, initializes all game-related systems.
+ * Renders the game screen by injecting:
+ * - The game layout (HUD + board)
+ * - The exit dialog
+ *
+ * After rendering, all game systems are initialized.
+ *
+ * @returns void
  */
 export function renderGameBoard(): void {
   APP.innerHTML = getGameTemplate(GAME_STATE.theme) + getExitDialogTemplate();
@@ -49,12 +65,14 @@ export function renderGameBoard(): void {
 }
 
 /**
- * Initializes all game systems:
- * - Exit dialog
+ * Initializes all systems required for the game:
+ * - Exit dialog behavior
  * - Grid layout
- * - Card generation
+ * - Card creation and rendering
  * - Player HUD
- * - Game over callback
+ * - Game-over callback
+ *
+ * @returns void
  */
 function initGameBoard(): void {
   setupExitDialog();
@@ -65,10 +83,14 @@ function initGameBoard(): void {
 }
 
 /**
- * Sets up the exit dialog behavior:
- * - Opens the dialog
- * - Closes the dialog
- * - Confirms exit and resets game state
+ * Sets up the exit dialog functionality.
+ *
+ * Behavior:
+ * - Opens the dialog when clicking the exit button
+ * - Closes the dialog when clicking cancel
+ * - Confirms exit, resets game state, and navigates to settings
+ *
+ * @returns void
  */
 function setupExitDialog(): void {
   const overlay = document.querySelector(".exit-dialog-overlay")!;
@@ -89,8 +111,14 @@ function setupExitDialog(): void {
 }
 
 /**
- * Configures the grid layout based on the selected board size.
- * Uses a fixed mapping of card count → column count.
+ * Configures the grid layout of the game board.
+ *
+ * Column count is based on board size:
+ * - 16 cards → 4 columns
+ * - 24 cards → 6 columns
+ * - 36 cards → 6 columns
+ *
+ * @returns void
  */
 function setupGrid(): void {
   const board = document.getElementById("game-board")!;
@@ -102,16 +130,20 @@ function setupGrid(): void {
 }
 
 /**
- * Creates and renders all card elements for the current game.
+ * Generates all card pairs and renders them into the board.
+ *
+ * @returns void
  */
-function initializeCards() {
+function initializeCards(): void {
   const cards = createCardPairs();
   renderCards(cards);
 }
 
 /**
- * Generates an array of card pair IDs based on the board size.
- * Each number appears exactly twice.
+ * Creates an array of card IDs based on the board size.
+ * Each ID appears exactly twice to form matching pairs.
+ *
+ * @returns A shuffled array of card IDs.
  */
 function createCardPairs(): number[] {
   const size = GAME_STATE.size;
@@ -126,7 +158,10 @@ function createCardPairs(): number[] {
 }
 
 /**
- * Renders all card elements into the game board container.
+ * Renders all card elements into the game board.
+ *
+ * @param cards - Array of card IDs to render.
+ * @returns void
  */
 function renderCards(cards: number[]): void {
   const board = document.getElementById("game-board")!;
@@ -134,7 +169,10 @@ function renderCards(cards: number[]): void {
 }
 
 /**
- * Creates a single card element with the correct theme and click behavior.
+ * Creates a single card element using the active theme.
+ *
+ * @param num - The card ID.
+ * @returns A fully initialized card element.
  */
 function createCardElement(num: number): HTMLElement {
   const theme = GAME_STATE.theme;
@@ -146,11 +184,15 @@ function createCardElement(num: number): HTMLElement {
 }
 
 /**
- * Renders a result screen manually (used for debug shortcuts).
+ * Forces a specific result screen to appear.
+ * Used for debug keyboard shortcuts.
+ *
+ * @param screen - The result type to display.
+ * @returns void
  */
 export function showResultScreenOverride(
   screen: "blue" | "orange" | "draw" | "gameover",
-) {
+): void {
   const data = getWinnerScreenData(screen);
   renderWinnerScreen(data);
   if (data.showScoreboard) updateWinnerScoreboardIcons();
@@ -159,8 +201,11 @@ export function showResultScreenOverride(
 
 /**
  * Shuffles an array using the Fisher–Yates algorithm.
+ *
+ * @param array - The array to shuffle.
+ * @returns The shuffled array.
  */
-function shuffle(array: any[]) {
+function shuffle(array: any[]): any[] {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -169,10 +214,11 @@ function shuffle(array: any[]) {
 }
 
 /**
- * Determines the winner, selects the correct result screen,
- * and renders the final result UI.
+ * Determines the winner and renders the appropriate result screen.
+ *
+ * @returns void
  */
-function showResultScreen() {
+function showResultScreen(): void {
   const winner = getWinner();
   const screen = getScreenType(winner);
 
@@ -184,17 +230,23 @@ function showResultScreen() {
 }
 
 /**
- * Determines the winner based on the current score.
+ * Determines the winner based on current scores.
+ *
+ * @returns "blue", "orange", or "draw".
  */
-function getWinner() {
+function getWinner(): "blue" | "orange" | "draw" {
   if (GAME_STATE.scoreBlue > GAME_STATE.scoreOrange) return "blue";
   if (GAME_STATE.scoreOrange > GAME_STATE.scoreBlue) return "orange";
   return "draw";
 }
 
 /**
- * Determines which result screen should be shown.
- * If the player loses, the "gameover" screen is used.
+ * Converts the winner into a result screen type.
+ *
+ * If the player loses, the "gameover" screen is shown instead.
+ *
+ * @param winner - The winner determined by getWinner().
+ * @returns The screen type to render.
  */
 function getScreenType(
   winner: "blue" | "orange" | "draw",

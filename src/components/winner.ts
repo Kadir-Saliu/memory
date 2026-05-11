@@ -10,8 +10,17 @@ import { APP } from "../app";
 /**
  * Builds all data required to render the winner screen.
  *
- * @param screen - The type of result screen to display ("blue", "orange", "draw", "gameover").
- * @returns An object containing theme, screen type, icon HTML, confetti HTML, and scoreboard visibility.
+ * This function prepares all dynamic values needed by the winner template:
+ *
+ * - The active theme (`code` or `gaming`)
+ * - The result type (`blue`, `orange`, `draw`, `gameover`)
+ * - The correct winner icon for the selected theme
+ * - Optional confetti (only for winning screens in the code theme)
+ * - Final scores for both players
+ * - Whether the scoreboard should be shown (only in gameover mode)
+ *
+ * @param screen - The result type to display.
+ * @returns An object containing all data required by the winner template.
  */
 export function getWinnerScreenData(
   screen: "blue" | "orange" | "draw" | "gameover",
@@ -34,24 +43,32 @@ export function getWinnerScreenData(
     screen,
     icon,
     confetti,
+    scoreBlue: GAME_STATE.scoreBlue,
+    scoreOrange: GAME_STATE.scoreOrange,
     showScoreboard: screen === "gameover",
   };
 }
 
 /**
- * Renders the winner screen by injecting the winner template into the app container.
+ * Renders the winner screen by injecting the generated HTML
+ * into the main application container.
  *
  * @param data - The winner screen data object created by getWinnerScreenData().
+ * @returns void
  */
-export function renderWinnerScreen(data: any) {
+export function renderWinnerScreen(data: any): void {
   APP.innerHTML = getWinnerTemplate(data);
 }
 
 /**
  * Updates the scoreboard icons on the winner screen.
- * Ensures the icons match the active theme (gaming or code).
+ *
+ * Ensures that the icons match the active theme by loading
+ * the correct HUD icon set and injecting them into the scoreboard.
+ *
+ * @returns void
  */
-export function updateWinnerScoreboardIcons() {
+export function updateWinnerScoreboardIcons(): void {
   const HUD_ICONS = getHUDIcons();
 
   const blueIcon = document.querySelector(
@@ -67,9 +84,14 @@ export function updateWinnerScoreboardIcons() {
 
 /**
  * Attaches the click handler for the "Back" button on the winner screen.
- * Resets game state and returns the user to the settings view.
+ *
+ * When clicked:
+ * - Resets the game state (current player + scores)
+ * - Navigates back to the settings screen
+ *
+ * @returns void
  */
-export function attachWinnerBackButton() {
+export function attachWinnerBackButton(): void {
   document.getElementById("back")!.addEventListener("click", () => {
     GAME_STATE.currentPlayer = "blue";
     GAME_STATE.scoreBlue = 0;
