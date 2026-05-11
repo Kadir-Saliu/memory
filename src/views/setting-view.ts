@@ -37,7 +37,7 @@ function getSettingsTemplate(): string {
           <!-- GAME THEMES -->
           <div class="settings__group">
             <div class="settings__header">
-              <img src="/game-theme-icon.png" alt="Game theme icon">
+              <img src="./game-theme-icon.png" alt="Game theme icon">
               <h3 class="settings__subtitle">Game themes</h3>
             </div>
 
@@ -59,7 +59,7 @@ function getSettingsTemplate(): string {
           <!-- PLAYER -->
           <div class="settings__group">
             <div class="settings__header">
-              <img src="/choose-player-icon.png" alt="Choose player icon">
+              <img src="./choose-player-icon.png" alt="Choose player icon">
               <h3 class="settings__subtitle">Choose player</h3>
             </div>
 
@@ -81,7 +81,7 @@ function getSettingsTemplate(): string {
           <!-- BOARD SIZE -->
           <div class="settings__group">
             <div class="settings__header">
-              <img src="/board-size-icon.png" alt="Board size icon">
+              <img src="./board-size-icon.png" alt="Board size icon">
               <h3 class="settings__subtitle">Board size</h3>
             </div>
 
@@ -111,14 +111,14 @@ function getSettingsTemplate(): string {
         <div class="settings__right">
 
           <div class="settings__preview">
-            <img id="preview-img" src="/preview/code-theme.png" alt="Preview">
+            <img id="preview-img" src="./preview/code-theme.png" alt="Preview">
           </div>
 
           <div class="settings__summary">
             <p id="summary-line">Theme / Player / Board size</p>
 
             <button id="start-game" class="settings__start-btn" disabled>
-              <img src="/playbutton.svg" class="start-icon" alt="">
+              <img src="./playbutton.svg" class="start-icon" alt="">
               Start
             </button>
           </div>
@@ -176,9 +176,9 @@ function initSettingsEvents(): void {
         ?.getAttribute("data-theme");
 
       if (activeTheme) {
-        previewImg.src = `/preview/${activeTheme}-theme.png`;
+        previewImg.src = `./preview/${activeTheme}-theme.png`;
       } else {
-        previewImg.src = `/preview/code-theme.png`;
+        previewImg.src = `./preview/code-theme.png`;
       }
     });
   });

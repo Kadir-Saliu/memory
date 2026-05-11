@@ -5,11 +5,11 @@ import { GAME_STATE } from "../state/state";
  * Each property contains an HTML string representing an icon.
  */
 const ICONS_GAMING = {
-  blue: `<img src="/images/icons/blue-game-theme-icon.png" class="hud-icon">`,
-  orange: `<img src="/images/icons/orange-game-theme-icon.png" class="hud-icon">`,
-  currentBlue: `<img src="/images/icons/white-game-theme-icon.png">`,
-  currentOrange: `<img src="/images/icons/white-game-theme-icon.png">`,
-  exit: `<img src="/images/tags/exit-icon-code.png" class="hud-icon">`,
+  blue: `<img src="./images/icons/blue-game-theme-icon.png" class="hud-icon">`,
+  orange: `<img src="./images/icons/orange-game-theme-icon.png" class="hud-icon">`,
+  currentBlue: `<img src="./images/icons/white-game-theme-icon.png">`,
+  currentOrange: `<img src="./images/icons/white-game-theme-icon.png">`,
+  exit: `<img src="./images/tags/exit-icon-code.png" class="hud-icon">`,
 };
 
 /**
@@ -17,11 +17,11 @@ const ICONS_GAMING = {
  * Each property contains an HTML string representing an icon.
  */
 const ICONS_CODE = {
-  blue: `<img src="/images/tags/blue-tag-code.png" class="hud-icon">`,
-  orange: `<img src="/images/tags/orange-tag-code.png" class="hud-icon">`,
-  currentBlue: `<img src="/images/tags/blue-tag-code.png" class="hud-icon">`,
-  currentOrange: `<img src="/images/tags/orange-tag-code.png" class="hud-icon">`,
-  exit: `<img src="/images/tags/exit-icon-code.png" class="hud-icon">`,
+  blue: `<img src="./images/tags/blue-tag-code.png" class="hud-icon">`,
+  orange: `<img src="./images/tags/orange-tag-code.png" class="hud-icon">`,
+  currentBlue: `<img src="./images/tags/blue-tag-code.png" class="hud-icon">`,
+  currentOrange: `<img src="./images/tags/orange-tag-code.png" class="hud-icon">`,
+  exit: `<img src="./images/tags/exit-icon-code.png" class="hud-icon">`,
 };
 
 /**

@@ -9,8 +9,8 @@
  * All values are file paths to the respective icon images.
  */
 export const WINNER_ICONS_GAMING = {
-  blue: `/images/icons/pokal-game-icon.png`,
-  orange: `/images/icons/pokal-game-icon.png`,
+  blue: `images/icons/pokal-game-icon.png`,
+  orange: `images/icons/pokal-game-icon.png`,
   draw: `images/draw-game-icon.png`,
 };
 

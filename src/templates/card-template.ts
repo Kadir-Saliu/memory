@@ -13,10 +13,10 @@ export function getCardTemplate(theme: string, num: number): string {
   return `
     <div class="card__inner">
       <div class="card__front">
-        <img src="/cards/${theme}/back.png" alt="">
+        <img src="./cards/${theme}/back.png" alt="">
       </div>
       <div class="card__back">
-        <img src="/cards/${theme}/${num}.png" alt="">
+        <img src="./cards/${theme}/${num}.png" alt="">
       </div>
     </div>
   `;
