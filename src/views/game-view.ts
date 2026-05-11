@@ -235,17 +235,16 @@ function showGameOverThenWinner(winner: "blue" | "orange") {
 function showResultScreen(): void {
   const winner = getWinner();
 
-  if (winner !== "draw" && winner !== GAME_STATE.selectedPlayer) {
-    showGameOverThenWinner(winner);
+  // Draw → direkt Draw-Screen
+  if (winner === "draw") {
+    const data = getWinnerScreenData("draw");
+    renderWinnerScreen(data);
+    attachWinnerBackButton();
     return;
   }
 
-  const screen = getScreenType(winner);
-  const data = getWinnerScreenData(screen);
-  renderWinnerScreen(data);
-
-  if (data.showScoreboard) updateWinnerScoreboardIcons();
-  attachWinnerBackButton();
+  // Gewinn oder Verlust → immer Game Over → Winner
+  showGameOverThenWinner(winner);
 }
 
 /**
@@ -257,20 +256,4 @@ function getWinner(): "blue" | "orange" | "draw" {
   if (GAME_STATE.scoreBlue > GAME_STATE.scoreOrange) return "blue";
   if (GAME_STATE.scoreOrange > GAME_STATE.scoreBlue) return "orange";
   return "draw";
-}
-
-/**
- * Converts the winner into a result screen type.
- * If the player loses, returns "gameover".
- *
- * @param winner - Winner from getWinner()
- * @returns "blue" | "orange" | "draw" | "gameover"
- */
-function getScreenType(
-  winner: "blue" | "orange" | "draw",
-): "blue" | "orange" | "draw" | "gameover" {
-  if (winner !== "draw" && winner !== GAME_STATE.selectedPlayer) {
-    return "gameover";
-  }
-  return winner;
 }
