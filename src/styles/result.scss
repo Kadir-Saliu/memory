@@ -76,9 +76,24 @@
   text-align: center;
 
   .confetti {
+    display: block;
     width: 100%;
-    height: 200px;
+    height: auto; // wichtig für IMG
     margin-bottom: 25px;
+    position: relative; // verhindert, dass transform es rauswirft
+    animation: sway 3s ease-in-out infinite;
+  }
+
+  @keyframes sway {
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(15px);
+    }
+    100% {
+      transform: translateX(0);
+    }
   }
 
   .winner-title {
